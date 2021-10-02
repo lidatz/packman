@@ -21,6 +21,8 @@ import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
+	private boolean death = false;
+	
     private Dimension d;
     private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
 
@@ -222,6 +224,7 @@ public class Board extends JPanel implements ActionListener {
 
         if (pacsLeft == 0) {
             inGame = false;
+            death = true;
         }
 
         continueLevel();
@@ -363,7 +366,7 @@ public class Board extends JPanel implements ActionListener {
             drawPacmanDown(g2d);
         }
     }
-
+    			
     private void drawPacmanUp(Graphics2D g2d) {
 
         switch (pacmanAnimPos) {
@@ -568,6 +571,12 @@ public class Board extends JPanel implements ActionListener {
             playGame(g2d);
         } else {
             showIntroScreen(g2d);
+            if (death)
+            {
+            	g2d.setPaint(Color.red);
+            	g2d.setFont(new Font("Calibri",Font.BOLD,50));
+            	g2d.drawString("GAME OVER", SCREEN_SIZE / 2 - 100 , SCREEN_SIZE / 2 + 100);
+            }
         }
 
         g2d.drawImage(ii, 5, 5, this);
@@ -605,7 +614,7 @@ public class Board extends JPanel implements ActionListener {
                     }
                 }
             } else {
-                if (key == 's' || key == 'S') {
+                if (key == 'S' || key == KeyEvent.VK_SPACE) {
                     inGame = true;
                     initGame();
                 }
